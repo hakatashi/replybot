@@ -1,5 +1,8 @@
 var elasticsearch = require('elasticsearch');
 var express = require('express');
+var morgan = require('morgan');
+var socketio = require('socket.io');
+
 var client = new elasticsearch.Client({
 	host: 'localhost:9200'
 });
@@ -15,7 +18,7 @@ app.use(express.static(__dirname));
 app.use(function (req, res, next) {
 	var err = new Error('Not Found');
 	err.status = 404;
-	next(err);
+	res.sendFile(__dirname + '/404.html');
 });
 
 // error handler
