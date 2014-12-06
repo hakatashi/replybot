@@ -61,11 +61,36 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
+html, body {
+    height: 100%;
+}
 
+#chat {
+    position: relative;
+    width: 540px;
+    height: 100%;
+    margin: 0 auto;
+}
 
+#logspace {
+    position: absolute;
+    top: 0;
+    bottom: 34px;
+    left: 0;
+    right: 0;
+    overflow: scroll;
+}
 
+#log {
+    width: 100%;
+    margin: 0;
+}
 
-
+#input {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
 
 
 
