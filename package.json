@@ -1,0 +1,24 @@
+{
+  "name": "replybot",
+  "version": "0.0.0",
+  "description": "Reply bot powered by twitter corpus",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hakatashi/replybot.git"
+  },
+  "author": "hakatashi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hakatashi/replybot/issues"
+  },
+  "homepage": "https://github.com/hakatashi/replybot",
+  "dependencies": {
+    "elasticsearch": "^3.0.1",
+    "express": "^4.10.4",
+    "socket.io": "^1.2.1"
+  }
+}
