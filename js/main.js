@@ -6,8 +6,8 @@ function refresh() {
 		data.forEach(function (row) {
 			onChat(row);
 		});
+		scroll();
 	});
-	setTimeout(scroll, 200);
 }
 
 function onChat(data) {
