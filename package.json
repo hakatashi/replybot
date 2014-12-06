@@ -21,6 +21,7 @@
     "express": "^4.10.4",
     "morgan": "^1.5.0",
     "seedrandom": "^2.3.10",
-    "socket.io": "^1.2.1"
+    "socket.io": "^1.2.1",
+    "sqlite3": "^3.0.4"
   }
 }
