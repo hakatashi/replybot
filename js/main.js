@@ -7,7 +7,7 @@ function refresh() {
 			onChat(row);
 		});
 	});
-	scroll();
+	setTimeout(scroll, 200);
 }
 
 function onChat(data) {
@@ -22,6 +22,7 @@ function onChat(data) {
 }
 
 function scroll() {
+	$('#logspace').stop();
 	$('#logspace').animate({
 		scrollTop: $('#log').height()
 	}, 'slow');
