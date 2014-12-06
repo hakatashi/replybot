@@ -42,5 +42,6 @@ socket.on('chat', function (text) {
 });
 
 $(document).ready(function () {
+	$('#input').focus();
 	refresh();
 })

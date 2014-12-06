@@ -2,6 +2,9 @@ var elasticsearch = require('elasticsearch');
 var express = require('express');
 var morgan = require('morgan');
 var socketio = require('socket.io');
+var seedrandom = require('seedrandom');
+
+var names = require('./names.json');
 
 var client = new elasticsearch.Client({
 	host: 'localhost:9200'
@@ -20,7 +23,69 @@ function speak(name, text) {
 }
 
 function ask(name, text) {
+	client.search({
+		index: 'tweet',
+		type: 'reply',
+		body: {
+			query: {
+				match: {
+					dest: text
+				}
+			}
+		}
+	}, function (error, result) {
+		if (error) return console.error(error);
 
+		if (result.hits.total === 0) {
+			client.search({
+				index: 'tweet',
+				type: 'reply',
+				body: {
+					query: {
+						function_score: {
+							functions: [
+								{
+									random_score: {
+										seed: Math.random().toString()
+									}
+								}
+							]
+						}
+					}
+				}
+			}, function (error, result) {
+				if (error) return console.error(error);
+
+				speak('bot', result.hits.hits[0]._source.reply + ' > ' + name);
+			});
+		} else {
+			var hits = result.hits.hits;
+			var choices = [];
+			hits.forEach(function (hit, index) {
+				if (hit._score > 2 || index < 3) choices.push(hit);
+			});
+
+			var scoreSum = 0;
+			choices.forEach(function (choice) { scoreSum += choice._score; });
+
+			var dice = Math.random() * scoreSum;
+			var offset = 0;
+			var selection;
+			choices.some(function (choice) {
+				offset += choice._score;
+				if (dice < offset) {
+					selection = choice;
+					return true;
+				} else return false;
+			});
+
+			speak('bot', selection._source.reply + ' > ' + name);
+		}
+	});
+}
+
+function getName(id) {
+	return names[Math.floor(seedrandom(id)() * names.length)]
 }
 
 // Launch web server
@@ -60,13 +125,8 @@ var server = app.listen(10724, function () {
 var io = socketio(server);
 
 io.on('connection', function (socket) {
-	console.log('connected');
 	socket.on('chat', function (data) {
-		speak('someone', data);
-		ask('soneone', data);
+		speak(getName(socket.handshake.address), data);
+		ask(getName(socket.handshake.address), data);
 	});
 });
-
-setInterval(function () {
-	speak('test', new Date().toString());
-}, 3000);
