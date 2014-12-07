@@ -136,8 +136,10 @@ db.run('CREATE TABLE IF NOT EXISTS log (date INTEGER, name TEXT, text TEXT)', fu
 
 	io.on('connection', function (socket) {
 		socket.on('chat', function (data) {
-			speak(getName(socket.id), data);
-			ask(getName(socket.id), data);
+			if (data.toString().trim() !== '') {
+				speak(getName(socket.id), data);
+				ask(getName(socket.id), data);
+			}
 		});
 	});
 });
