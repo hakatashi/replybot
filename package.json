@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/hakatashi/replybot",
   "dependencies": {
-    "elasticsearch": "^3.0.1",
+    "elasticsearch": "^10.0.1",
     "express": "^4.10.4",
     "morgan": "^1.5.0",
     "seedrandom": "^2.3.10",
